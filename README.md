@@ -1,4 +1,4 @@
-# promise.allSettled
+# Promise.allSettled
 ECMAScript Proposal, specs, and reference implementation for Promise.allSettled
 
 ## Implementations
