@@ -1,3 +1,4 @@
+
 # Promise.allSettled
 ECMAScript Proposal, specs, and reference implementation for Promise.allSettled
 
@@ -8,6 +9,34 @@ The key feature of the .allSettled() method is that it allows us to collect Prom
 Promise.allSettled() returns a promise that is fulfilled with an array of promise state snapshots, but only after all the original promises have settled, i.e. become either fulfilled or rejected.
 
 This method is used in its static form on arrays of promises, in order to execute a number of operations concurrently and be notified when they all finish, regardless of success or failure.
+
+## Example
+Currently you would need to iterate through the array of promises and return a new value with the status known (either through the resolved branch or the rejected branch.
+
+```js
+function reflect(promise){
+    return promise.then(function(v){ 
+	    return {v:v, status: "resolved" }
+	},
+	function(e){ 
+		return {e:e, status: "rejected" }
+	});
+}
+
+let arr = [ fetch('index.html'), fetch('http://does-not-exist') ]
+Promise.all(arr.map(reflect)).then(function(results){
+    return success = results.filter(x => x.status === "resolved");
+});
+```
+
+JavaScript programmers can currently accomplish the same thing through this syntax:
+```js
+let arr = [ fetch('index.html'), fetch('http://does-not-exist') ]
+Promise.allSettled(promises).then((results) => {
+		return results.filter(x => x.status === "resolved");
+	});
+});
+```
 
 ## Userland Implementations
 * https://www.npmjs.com/package/q
