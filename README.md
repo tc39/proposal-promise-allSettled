@@ -18,7 +18,7 @@ function reflect(promise){
 	    return {value:v, status: "fulfilled" }
 	},
 	function(e){ 
-		return {error:e, status: "rejected" }
+		return {reason:e, status: "rejected" }
 	});
 }
 
