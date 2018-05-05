@@ -16,10 +16,10 @@ Currently you would need to iterate through the array of promises and return a n
 ```js
 function reflect(promise){
     return promise.then(function(v){ 
-	    return {v:v, status: "resolved" }
+	    return {value:v, status: "resolved" }
 	},
 	function(e){ 
-		return {e:e, status: "rejected" }
+		return {error:e, status: "rejected" }
 	});
 }
 
