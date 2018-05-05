@@ -1,4 +1,3 @@
-
 # Promise.allSettled (Stage 0 Strawman)
 ECMAScript Proposal and reference implementation for Promise.allSettled
 
@@ -49,3 +48,4 @@ Promise.allSettled(promises).then((results) => {
 ### Further Reading
 * https://www.bennadel.com/blog/3289-implementing-q-s-allsettled-promise-method-in-bluebird.htm
 * http://exploringjs.com/es6/ch_promises.html
+* https://github.com/kriskowal/q/issues/257 [naming]
