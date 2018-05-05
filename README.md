@@ -1,10 +1,10 @@
 
 # Promise.allSettled
-ECMAScript Proposal, specs, and reference implementation for Promise.allSettled
+ECMAScript Proposal and reference implementation for Promise.allSettled
 
 ## Rationale
-A common use case that I, and many others have, is to want to settle a list of promises with an array. Due to the short circuit nature of Promise.all() any rejected promise will reject the entire operation and return a rejection.
-The key feature of the .allSettled() method is that it allows us to collect Promise rejections and resolutions settling all promises.
+A common use case that I, and many others have, is to want to settle a list of promises with an array. Due to the short circuit nature of Promise.all() any rejected promise will cancel the entire operation and return a rejection.
+The key feature of the .allSettled() method is that it allows us to settle all promises.
 
 Promise.allSettled() returns a promise that is fulfilled with an array of promise state snapshots, but only after all the original promises have settled, i.e. become either fulfilled or rejected.
 
@@ -16,7 +16,7 @@ Currently you would need to iterate through the array of promises and return a n
 ```js
 function reflect(promise){
     return promise.then(function(v){ 
-	    return {value:v, status: "resolved" }
+	    return {value:v, status: "fulfilled" }
 	},
 	function(e){ 
 		return {error:e, status: "rejected" }
@@ -25,7 +25,7 @@ function reflect(promise){
 
 let arr = [ fetch('index.html'), fetch('http://does-not-exist') ]
 Promise.all(arr.map(reflect)).then(function(results){
-    return success = results.filter(x => x.status === "resolved");
+    return success = results.filter(x => x.status === "fulfilled");
 });
 ```
 
@@ -33,7 +33,7 @@ JavaScript programmers can currently accomplish the same thing through this synt
 ```js
 let arr = [ fetch('index.html'), fetch('http://does-not-exist') ]
 Promise.allSettled(promises).then((results) => {
-		return results.filter(x => x.status === "resolved");
+		return results.filter(x => x.status === "fulfilled");
 	});
 });
 ```
@@ -47,3 +47,4 @@ Promise.allSettled(promises).then((results) => {
 
 ### Further Reading
 * https://www.bennadel.com/blog/3289-implementing-q-s-allsettled-promise-method-in-bluebird.htm
+* http://exploringjs.com/es6/ch_promises.html
