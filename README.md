@@ -1,5 +1,5 @@
 
-# Promise.allSettled
+# Promise.allSettled (Stage 0 Strawman)
 ECMAScript Proposal and reference implementation for Promise.allSettled
 
 ## Rationale
