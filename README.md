@@ -28,9 +28,9 @@ Promise.all(arr.map(reflect)).then(function(results){
 });
 ```
 
-JavaScript programmers can currently accomplish the same thing through this syntax:
+JavaScript programmers can currently accomplish the same thing through this API:
 ```js
-let arr = [ fetch('index.html'), fetch('http://does-not-exist') ]
+let promises = [ fetch('index.html'), fetch('http://does-not-exist') ]
 Promise.allSettled(promises).then((results) => {
 		return results.filter(x => x.status === "fulfilled");
 	});
