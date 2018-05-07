@@ -80,7 +80,11 @@ The disadvantage is that a `Maybe` type could add complexity to the Promise API 
 * https://www.npmjs.com/package/es2015-promise.allsettled
 * https://www.npmjs.com/package/maybe
 
+### Polyfill 
+* https://github.com/zloirock/core-js/issues/399
+
 ### Further Reading
 * https://www.bennadel.com/blog/3289-implementing-q-s-allsettled-promise-method-in-bluebird.htm
 * http://exploringjs.com/es6/ch_promises.html
 * https://github.com/kriskowal/q/issues/257 [naming]
+
