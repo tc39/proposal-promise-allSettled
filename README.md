@@ -36,6 +36,40 @@ Promise.allSettled(promises).then((results) => {
 	});
 });
 ```
+Collecting errors example:
+```js
+let promises = [ fetch('index.html'), fetch('http://does-not-exist') ]
+
+const errors = Promise.allSettled(promises)
+  .filter(p => p.status === "rejected")
+  .map(p => p.reason);
+```
+
+## Exploration of return types
+Currently this proposal uses objects within an array, this is the most commonly used pattern in implementations today.
+### [Object]
+```js
+[{status: <string>, reason: <string>, value: <any>},...]
+```
+### A new Maybe type
+There's the opportunity to use a new type to combine rejections and resolutions. Such types have been implemented, like Maybe https://www.npmjs.com/package/maybe which is inspired by [Haskell's Data.Maybe](http://www.haskell.org/ghc/docs/7.4-latest/html/libraries/base-4.5.1.0/Data-Maybe.html). 
+Rust also has [`Result`](https://doc.rust-lang.org/std/result/) enum which can represent both a success and containing a value, and [`Err(E)`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err), representing error and containing an error value.
+##### Pros
+
+By using Maybe, you are declaring that your value may or may not exist when it is accessed. This encourages explicit handling of these cases, and ensures uniform treatment of such cases.
+
+There could be some potential usage with pattern matching for explicit handling of errors.
+```js
+let unsure =  Maybe(Math.random()  <  0.5  ||  undefined);
+const val = match (unsure) {
+  true => `We have a value less than 0.5`,
+  Maybe.Nothing => 'There is no value!',
+}
+```
+
+##### Cons
+The disadvantage is that a `Maybe` type could add complexity to the Promise API and to the language.
+
 
 ## Userland Implementations
 * https://www.npmjs.com/package/q
@@ -44,6 +78,7 @@ Promise.allSettled(promises).then((results) => {
 * https://www.npmjs.com/package/promise-settle 
 * https://github.com/cujojs/when/blob/master/docs/api.md#whensettle
 * https://www.npmjs.com/package/es2015-promise.allsettled
+* https://www.npmjs.com/package/maybe
 
 ### Further Reading
 * https://www.bennadel.com/blog/3289-implementing-q-s-allsettled-promise-method-in-bluebird.htm
