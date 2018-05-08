@@ -28,7 +28,7 @@ Promise.all(arr.map(reflect)).then(function(results){
 });
 ```
 
-JavaScript programmers can currently accomplish the same thing through this API:
+The proposed API allows this simplified form:
 ```js
 let promises = [ fetch('index.html'), fetch('http://does-not-exist') ]
 Promise.allSettled(promises).then((results) => {
