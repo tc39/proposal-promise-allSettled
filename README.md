@@ -82,6 +82,7 @@ The disadvantage is that a `Maybe` type could add complexity to the Promise API 
 
 ### Further Reading
 * https://www.bennadel.com/blog/3289-implementing-q-s-allsettled-promise-method-in-bluebird.htm
+* https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md
 * http://exploringjs.com/es6/ch_promises.html
 * https://github.com/kriskowal/q/issues/257 [naming]
 
