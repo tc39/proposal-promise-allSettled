@@ -68,7 +68,8 @@ const val = match (unsure) {
 ```
 
 ##### Cons
-The disadvantage is that a `Maybe` type could add complexity to the Promise API and to the language.
+* A `Maybe` type could add complexity to the Promise API and to the language.
+* This would make Promise.AllSettled inconsistent with Promise.All
 
 
 ## Userland Implementations
