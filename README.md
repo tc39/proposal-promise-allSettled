@@ -40,9 +40,10 @@ Collecting errors example:
 ```js
 let promises = [ fetch('index.html'), fetch('http://does-not-exist') ]
 
-const errors = Promise.allSettled(promises)
-  .filter(p => p.status === "rejected")
-  .map(p => p.reason);
+const errors = Promise.allSettled(promises).then(results => {
+	  return results.filter(p => p.status === "rejected")
+	  .map(p => p.reason);
+	})
 ```
 
 ## Exploration of return types
