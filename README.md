@@ -1,3 +1,4 @@
+
 # Promise.allSettled (Stage 0 Strawman)
 ECMAScript Proposal and reference implementation for Promise.allSettled
 
@@ -44,6 +45,16 @@ const errors = Promise.allSettled(promises).then(results => {
 	  return results.filter(p => p.status === "rejected")
 	  .map(p => p.reason);
 	})
+```
+
+### Real World Scenarios
+A common operation is knowing when all requests have completed regardless of the state of each request. This proposal would allow the following.
+```js
+const requests = URLs.map(x => fetch(x));
+Promise.allSettled(requests).finally(() => {
+  console.log('all requests are completed: either failed or succeeded');
+  removeLoadingIndicator();
+});
 ```
 
 ## Exploration of return types
