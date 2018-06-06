@@ -8,15 +8,15 @@ ECMAScript Proposal and reference implementation for Promise.allSettled
 
 **Stage:** 0 
 
-## Rationale
-A common use case that I, and many others have, is to want to settle a list of promises with an array. Due to the short circuit nature of Promise.all() any rejected promise will cancel the entire operation and return a rejection.
+## Overview and motivation
+A common use case that I and many others come across, is to want to settle all promises within an array. Due to the short circuit nature of Promise.all() any rejected promise will cancel the entire operation and return a rejection.
 The key feature of the .allSettled() method is that it allows us to settle all promises.
 
 Promise.allSettled() returns a promise that is fulfilled with an array of promise state snapshots, but only after all the original promises have settled, i.e. become either fulfilled or rejected.
 
 This method is used in its static form on arrays of promises, in order to execute a number of operations concurrently and be notified when they all finish, regardless of success or failure.
 
-## Example
+## Examples
 Currently you would need to iterate through the array of promises and return a new value with the status known (either through the resolved branch or the rejected branch.
 
 ```js
@@ -62,6 +62,7 @@ Promise.allSettled(requests).finally(() => {
   removeLoadingIndicator();
 });
 ```
+TODO: More examples
 
 ## Exploration of return types
 Currently this proposal uses objects within an array, this is the most commonly used pattern in implementations today.
