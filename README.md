@@ -35,7 +35,7 @@ Promise.all(arr.map(reflect)).then(function(results){
 });
 ```
 
-The proposed API allows this simplified form:
+The proposed API allows a developer to handle these cases without creating a reflect function and/or assigning intermediate results in temporary variables to map through:
 ```js
 let promises = [ fetch('index.html'), fetch('http://does-not-exist') ]
 Promise.allSettled(promises).then((results) => {
