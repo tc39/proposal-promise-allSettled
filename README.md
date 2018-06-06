@@ -1,6 +1,12 @@
 
-# Promise.allSettled (Stage 0 Strawman)
-ECMAScript Proposal and reference implementation for Promise.allSettled
+# Promise.allSettled
+ECMAScript Proposal and reference implementation for Promise.allSettled  
+
+**Author:** Jason Williams (BBC) 
+
+**Champion:** Mathias Bynens (Google)
+
+**Stage:** 0 
 
 ## Rationale
 A common use case that I, and many others have, is to want to settle a list of promises with an array. Due to the short circuit nature of Promise.all() any rejected promise will cancel the entire operation and return a rejection.
