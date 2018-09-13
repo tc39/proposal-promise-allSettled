@@ -79,7 +79,7 @@ const requests = urls.map(x => fetch(x)); // Imagine some of these will fail, an
 try {
   await Promise.all(requests);
   console.log('All requests have completed; now I can remove the loading indicator.');
-} catch () {
+} catch {
   console.log('At least one request has failed, but some of the requests still might not be finished! Oops.');
 }
 ```
