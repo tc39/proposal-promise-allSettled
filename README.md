@@ -1,7 +1,8 @@
 
 
-# Promise.allSettled
-ECMAScript Proposal and reference implementation for Promise.allSettled  
+# `Promise.allSettled`
+
+ECMAScript proposal and reference implementation for `Promise.allSettled`.
 
 **Author:** Jason Williams (BBC) 
 
@@ -10,6 +11,7 @@ ECMAScript Proposal and reference implementation for Promise.allSettled
 **Stage:** 0 
 
 ## Overview and motivation
+
 A common use case that I and many others come across, is to want to settle all promises within an array. Due to the short circuit nature of `Promise.all()` any rejected promise will cancel the entire operation and return a rejection.
 The key feature of the `.allSettled()` method is that it allows us to settle all promises.
 
@@ -17,22 +19,24 @@ The key feature of the `.allSettled()` method is that it allows us to settle all
 
 This method is used in its static form on arrays of promises, in order to execute a number of operations concurrently and be notified when they all finish, regardless of success or failure.
 
-## Why allSettled?
+## Why `allSettled`?
+
 We say that a promise is _settled_ if it is not pending, i.e. if it is either fulfilled or rejected.
 
 ## Examples
+
 Currently you would need to iterate through the array of promises and return a new value with the status known (either through the resolved branch or the rejected branch.
 
 ```js
 function reflect(promise) {
-    return promise.then(
-    	(v) => {
-	    return { value: v, status: 'fulfilled' }
-	},
-	(error) => { 
-            return { reason: error, status: 'rejected' }
-        }
-    );
+  return promise.then(
+    (v) => {
+      return { value: v, status: 'fulfilled' }
+    },
+    (error) => { 
+      return { reason: error, status: 'rejected' }
+    }
+  );
 }
 
 const arr = [ fetch('index.html'), fetch('http://does-not-exist/') ];
@@ -61,7 +65,7 @@ const errors = results
     .map(p => p.reason);
 ```
 
-### Real-world Scenarios
+### Real-world scenarios
 
 A common operation is knowing when all requests have completed regardless of the state of each request. This allows developers to build with progressive enhancement in mind. Not all API responses will be mandatory.
 
@@ -90,7 +94,8 @@ Promise.allSettled(requests).finally(() => {
 });
 ```
 
-## Userland Implementations
+## Userland implementations
+
 * https://www.npmjs.com/package/q
 * https://www.npmjs.com/package/rsvp
 * http://bluebirdjs.com/docs/api/reflect.html
@@ -99,9 +104,9 @@ Promise.allSettled(requests).finally(() => {
 * https://www.npmjs.com/package/es2015-promise.allsettled
 * https://www.npmjs.com/package/maybe
 
-### Further Reading
+### Further reading
+
 * https://www.bennadel.com/blog/3289-implementing-q-s-allsettled-promise-method-in-bluebird.htm
 * https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md
 * http://exploringjs.com/es6/ch_promises.html
 * https://github.com/kriskowal/q/issues/257 [naming]
-
