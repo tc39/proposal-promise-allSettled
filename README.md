@@ -61,8 +61,8 @@ const promises = [ fetch('index.html'), fetch('https://does-not-exist/') ];
 
 const results = await Promise.allSettled(promises);
 const errors = results
-    .filter(p => p.status === 'rejected')
-    .map(p => p.reason);
+  .filter(p => p.status === 'rejected')
+  .map(p => p.reason);
 ```
 
 ### Real-world scenarios
