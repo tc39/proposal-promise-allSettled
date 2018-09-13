@@ -31,10 +31,10 @@ Currently you would need to iterate through the array of promises and return a n
 function reflect(promise) {
   return promise.then(
     (v) => {
-      return { value: v, status: 'fulfilled' }
+      return { status: 'fulfilled', value: v };
     },
     (error) => { 
-      return { reason: error, status: 'rejected' }
+      return { status: 'rejected', reason: error };
     }
   );
 }
