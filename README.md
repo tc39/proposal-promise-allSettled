@@ -39,8 +39,8 @@ function reflect(promise) {
   );
 }
 
-const arr = [ fetch('index.html'), fetch('https://does-not-exist/') ];
-const results = await Promise.all(arr.map(reflect));
+const promises = [ fetch('index.html'), fetch('https://does-not-exist/') ];
+const results = await Promise.all(promises.map(reflect));
 const successfulPromises = results.filter(p => p.status === 'fulfilled');
 ```
 
