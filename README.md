@@ -8,7 +8,7 @@ ECMAScript proposal and reference implementation for `Promise.allSettled`.
 
 **Champion:** Mathias Bynens (Google)
 
-**Stage:** 0 
+**Stage:** 1
 
 ## Overview and motivation
 
