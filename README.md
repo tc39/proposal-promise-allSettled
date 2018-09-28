@@ -88,7 +88,7 @@ Using `Promise.allSettled` would be more suitable for the operation we wish to p
 
 ```js
 // We know all API calls have finished.
-Promise.allSettled(requests).finally(() => {
+Promise.allSettled(requests).then(() => {
   console.log('All requests are completed: either failed or succeeded, I don’t care');
   removeLoadingIndicator();
 });
