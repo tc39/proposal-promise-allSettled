@@ -88,10 +88,12 @@ Using `Promise.allSettled` would be more suitable for the operation we wish to p
 
 ```js
 // We know all API calls have finished.
-Promise.allSettled(requests).then(() => {
-  console.log('All requests are completed: either failed or succeeded, I don’t care');
-  removeLoadingIndicator();
-});
+Promise.allSettled(requests)
+  .catch(() => console.log('Unreachable as allSettled never rejects.'))
+  .finally(() => {
+    console.log('All requests are completed: either failed or succeeded, I don’t care');
+    removeLoadingIndicator();
+  });
 ```
 
 ## Userland implementations
