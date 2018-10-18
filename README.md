@@ -87,7 +87,7 @@ try {
 Using `Promise.allSettled` would be more suitable for the operation we wish to perform:
 
 ```js
-// We know all API calls have finished.
+// We know all API calls have finished. We use finally but allSettled will never reject.
 Promise.allSettled(requests).finally(() => {
   console.log('All requests are completed: either failed or succeeded, I don’t care');
   removeLoadingIndicator();
