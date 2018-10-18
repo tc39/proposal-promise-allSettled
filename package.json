@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "proposal-promise-allSettled",
+  "version": "0.0.1",
+  "description": "ECMAScript allSettled proposal",
+  "repository": "tc39/proposal-promise-allSettled",
+  "author": "ECMA TC39",
+  "license": "SEE LICENSE IN https://tc39.github.io/ecma262/#sec-copyright-and-software-license",
+  "dependencies": {
+    "ecmarkup": "^3.16.0"
+  }
+}
