@@ -79,7 +79,7 @@
         1. Let _remainingElementsCount_ be _F_.[[RemainingElements]].
         1. Let _obj_ be ObjectCreate(%ObjectPrototype%).
         1. Perform CreateDataProperty(_obj_, `"value"`, _x_).
-        1. Perform CreateDataProperty(_obj_, `"status"`, `"fulfilled"`).
+        1. **HOW TO SET A STRING?** Perform CreateDataProperty(_obj_, `"status"`, `"fulfilled"`).
         1. Set _values_[_index_] to be _obj_.
         1. Set _remainingElementsCount_.[[Value]] to _remainingElementsCount_.[[Value]] - 1.
         1. If _remainingElementsCount_.[[Value]] is 0, then
@@ -87,10 +87,32 @@
           1. Return ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _valuesArray_ &raquo;).
         1. Return *undefined*.
       </emu-alg>
-      <p>The `"length"` property of a `Promise.all` resolve element function is 1.</p>
+      <p>**WHY DO WE NEED TO STATE THIS?** The `"length"` property of a `Promise.allSettled` resolve element function is 1.</p>
     </emu-clause>
 
     <emu-clause id="sec-promise.allsettled-reject-element-functions">
-        **COPY FROM RESOLVE**
+      <h1>`Promise.allSettled` Resolve Element Functions</h1>
+      <p>A `Promise.allSettled` resolve element function is an anonymous built-in function that is used to resolve a specific `Promise.allSettled` element. Each `Promise.allSettled` resolve element function has [[Index]], [[Values]], [[Capability]], [[RemainingElements]], and [[AlreadyCalled]] internal slots.</p>
+      <p>**PROBABLY NEED TO DEFINE AN INTERFACE** When a `Promise.allSettled` resolve element function is called with argument _x_, the following steps are taken:</p>
+      <emu-alg>
+        1. Let _F_ be the active function object.
+        1. Let _alreadyCalled_ be _F_.[[AlreadyCalled]].
+        1. If _alreadyCalled_.[[Value]] is *true*, return *undefined*.
+        1. Set _alreadyCalled_.[[Value]] to *true*.
+        1. Let _index_ be _F_.[[Index]].
+        1. Let _values_ be _F_.[[Values]].
+        1. Let _promiseCapability_ be _F_.[[Capability]].
+        1. Let _remainingElementsCount_ be _F_.[[RemainingElements]].
+        1. Let _obj_ be ObjectCreate(%ObjectPrototype%).
+        1. Perform CreateDataProperty(_obj_, `"value"`, _x_).
+        1. **HOW TO SET A STRING?** Perform CreateDataProperty(_obj_, `"status"`, `"fulfilled"`).
+        1. Set _values_[_index_] to be _obj_.
+        1. Set _remainingElementsCount_.[[Value]] to _remainingElementsCount_.[[Value]] - 1.
+        1. If _remainingElementsCount_.[[Value]] is 0, then
+          1. Let _valuesArray_ be CreateArrayFromList(_values_).
+          1. Return ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _valuesArray_ &raquo;).
+        1. Return *undefined*.
+      </emu-alg>
+      <p>**WHY DO WE NEED TO STATE THIS?** The `"length"` property of a `Promise.allSettled` resolve element function is 1.</p>
     </emu-clause>
   </emu-clause>
