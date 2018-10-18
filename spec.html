@@ -1,21 +1,21 @@
 <emu-clause id="sec-promise.allSettled">
     <h1>Promise.allSettled ( _iterable_ )</h1>
-    <p>The `all` function returns a new promise which is fulfilled with an array of fulfillment values for the passed promises, or rejects with the reason of the first passed promise that rejects. It resolves all elements of the passed iterable to promises as it runs this algorithm.</p>
+    <p>The `allSettled` function returns a promise that is fulfilled with an array of promise state snapshots, but only after all the original promises have settled, i.e. become either fulfilled or rejected. It resolves all elements of the passed iterable to promises as it runs this algorithm.</p>
     <emu-alg>
       1. Let _C_ be the *this* value.
       1. If Type(_C_) is not Object, throw a *TypeError* exception.
       1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
       1. Let _iteratorRecord_ be GetIterator(_iterable_).
-      1. IfAbruptRejectPromise(_iteratorRecord_, _promiseCapability_).
+      1. **NEEDS REVISION** IfAbruptRejectPromise(_iteratorRecord_, _promiseCapability_).
       1. Let _result_ be PerformPromiseAllSettled(_iteratorRecord_, _C_, _promiseCapability_).
-      1. If _result_ is an abrupt completion, then
+      1. **DO WE NEED THIS?** If _result_ is an abrupt completion, then
         1. If _iteratorRecord_.[[Done]] is *false*, set _result_ to IteratorClose(_iteratorRecord_, _result_).
         1. IfAbruptRejectPromise(_result_, _promiseCapability_).
-      1. Return Completion(_result_).
+      1. **WHAT IS THIS?** Return Completion(_result_).
     </emu-alg>
-    <p>This function is the <dfn>%Promise_all%</dfn> intrinsic object.</p>
+    <p>This function is the <dfn>%Promise_allSettled%</dfn> intrinsic object.</p>
     <emu-note>
-      <p>The `all` function requires its *this* value to be a constructor function that supports the parameter conventions of the `Promise` constructor.</p>
+      <p>The `allSettled` function requires its *this* value to be a constructor function that supports the parameter conventions of the `Promise` constructor.</p>
     </emu-note>
 
     <emu-clause id="sec-performpromiseallsettled" aoid="PerformPromiseAllSettled">
