@@ -104,8 +104,8 @@
         1. Let _promiseCapability_ be _F_.[[Capability]].
         1. Let _remainingElementsCount_ be _F_.[[RemainingElements]].
         1. Let _obj_ be ObjectCreate(%ObjectPrototype%).
-        1. Perform CreateDataProperty(_obj_, `"value"`, _x_).
-        1. **HOW TO SET A STRING?** Perform CreateDataProperty(_obj_, `"status"`, `"fulfilled"`).
+        1. Perform CreateDataProperty(_obj_, `"reason"`, _x_).
+        1. **HOW TO SET A STRING?** Perform CreateDataProperty(_obj_, `"status"`, `"rejected"`).
         1. Set _values_[_index_] to be _obj_.
         1. Set _remainingElementsCount_.[[Value]] to _remainingElementsCount_.[[Value]] - 1.
         1. If _remainingElementsCount_.[[Value]] is 0, then
