@@ -104,9 +104,22 @@ Promise.allSettled(requests).finally(() => {
 * https://www.npmjs.com/package/es2015-promise.allsettled
 * https://www.npmjs.com/package/maybe
 
-### Further reading
+## Further reading
 
 * https://www.bennadel.com/blog/3289-implementing-q-s-allsettled-promise-method-in-bluebird.htm
 * https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md
 * http://exploringjs.com/es6/ch_promises.html
 * https://github.com/kriskowal/q/issues/257 [naming]
+
+## TC39 meeting notes
+
+- [September 2018](https://tc39.github.io/tc39-notes/#TODO)
+
+## Specification
+
+* [Ecmarkup source](https://github.com/tc39/proposal-promise-allSettled/blob/master/spec.html)
+* [HTML version](https://tc39.github.io/proposal-promise-allSettled/)
+
+## Implementations
+
+* none yet
