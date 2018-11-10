@@ -113,7 +113,7 @@ Promise.allSettled(requests).finally(() => {
 
 ## TC39 meeting notes
 
-- [September 2018](https://tc39.github.io/tc39-notes/#TODO)
+- [September 2018](https://tc39.github.io/tc39-notes/2018-09_sept-27.html#promiseallsettled-for-stage-1)
 
 ## Specification
 
