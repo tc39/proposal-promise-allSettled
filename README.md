@@ -21,6 +21,8 @@ This method is used in its static form on arrays of promises, in order to execut
 
 We say that a promise is _settled_ if it is not pending, i.e. if it is either fulfilled or rejected. See [_promise states and fates_](https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md) for more background on the relevant terminology.
 
+Furthermore, the name `allSettled` is commonly used in userland libraries implementing this functionality. See below.
+
 ## Examples
 
 Currently you would need to iterate through the array of promises and return a new value with the status known (either through the resolved branch or the rejected branch.
