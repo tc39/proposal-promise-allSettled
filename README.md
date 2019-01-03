@@ -1,10 +1,8 @@
-
-
 # `Promise.allSettled`
 
 ECMAScript proposal and reference implementation for `Promise.allSettled`.
 
-**Author:** Jason Williams (BBC) 
+**Author:** Jason Williams (BBC) & Robert Pamely (Bloomberg)
 
 **Champion:** Mathias Bynens (Google)
 
