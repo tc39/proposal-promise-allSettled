@@ -19,7 +19,7 @@ This method is used in its static form on arrays of promises, in order to execut
 
 ## Why `allSettled`?
 
-We say that a promise is _settled_ if it is not pending, i.e. if it is either fulfilled or rejected.
+We say that a promise is _settled_ if it is not pending, i.e. if it is either fulfilled or rejected. See [_promise states and fates_](https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md) for more background on the relevant terminology.
 
 ## Examples
 
