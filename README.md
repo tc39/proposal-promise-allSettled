@@ -6,7 +6,7 @@ ECMAScript proposal and reference implementation for `Promise.allSettled`.
 
 **Champion:** Mathias Bynens (Google)
 
-**Stage:** 1
+**Stage:** 2
 
 ## Overview and motivation
 
@@ -33,7 +33,7 @@ function reflect(promise) {
     (v) => {
       return { status: 'fulfilled', value: v };
     },
-    (error) => { 
+    (error) => {
       return { status: 'rejected', reason: error };
     }
   );
@@ -99,7 +99,7 @@ Promise.allSettled(requests).finally(() => {
 * https://www.npmjs.com/package/q
 * https://www.npmjs.com/package/rsvp
 * http://bluebirdjs.com/docs/api/reflect.html
-* https://www.npmjs.com/package/promise-settle 
+* https://www.npmjs.com/package/promise-settle
 * https://github.com/cujojs/when/blob/master/docs/api.md#whensettle
 * https://www.npmjs.com/package/es2015-promise.allsettled
 * https://www.npmjs.com/package/maybe
