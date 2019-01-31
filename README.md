@@ -10,7 +10,7 @@ ECMAScript proposal and reference implementation for `Promise.allSettled`.
 
 ## Overview and motivation
 
-A common use case that I and many others come across, is to want to settle all promises within an array. Due to the short circuit nature of `Promise.all()` any rejected promise will cancel the entire operation and return a rejection.
+A common use case that I and many others come across, is to want to settle all promises within an array. Due to the short circuit nature of `Promise.all()` any rejected promise will make the resulting promise reject while silently discarding other results.
 The key feature of the `.allSettled()` method is that it allows us to settle all promises.
 
 `Promise.allSettled()` returns a promise that is fulfilled with an array of promise state snapshots, but only after all the original promises have settled, i.e. become either fulfilled or rejected.
