@@ -34,7 +34,7 @@ contributors: Jason Williams &amp; Robert Pamely
       <h1>Runtime Semantics: PerformPromiseAllSettled ( _iteratorRecord_, _constructor_, _resultCapability_ )</h1>
       <p>When the PerformPromiseAllSettled abstract operation is called with arguments _iteratorRecord_, _constructor_, and _resultCapability_, the following steps are taken:</p>
       <emu-alg>
-        1. Assert: IsConstructor(_constructor_) is *true*.
+        1. Assert: ! IsConstructor(_constructor_) is *true*.
         1. Assert: _resultCapability_ is a PromiseCapability Record.
         1. Let _values_ be a new empty List.
         1. Let _remainingElementsCount_ be a new Record { [[Value]]: 1 }.
