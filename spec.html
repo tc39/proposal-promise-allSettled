@@ -56,7 +56,7 @@ contributors: Jason Williams &amp; Robert Pamely
           1. Append *undefined* to _values_.
           1. Let _nextPromise_ be ? Invoke(_constructor_, `"resolve"`, &laquo; _nextValue_ &raquo;).
           1. Let _steps_ be the algorithm steps defined in <emu-xref href="#sec-promise.allsettled-resolve-element-functions" title></emu-xref>.
-          1. Let _resolveElement_ be CreateBuiltinFunction(_steps_, &laquo; [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] &raquo;).
+          1. Let _resolveElement_ be ! CreateBuiltinFunction(_steps_, &laquo; [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] &raquo;).
           1. Let _alreadyCalled_ be a new Record { [[Value]]: *false* }.
           1. Set _resolveElement_.[[AlreadyCalled]] to _alreadyCalled_.
           1. Set _resolveElement_.[[Index]] to _index_.
@@ -64,7 +64,7 @@ contributors: Jason Williams &amp; Robert Pamely
           1. Set _resolveElement_.[[Capability]] to _resultCapability_.
           1. Set _resolveElement_.[[RemainingElements]] to _remainingElementsCount_.
           1. Let _rejectSteps_ be the algorithm steps defined in <emu-xref href="#sec-promise.allsettled-reject-element-functions" title></emu-xref>.
-          1. Let _rejectElement_ be CreateBuiltinFunction(_rejectSteps_, &laquo; [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] &raquo;).
+          1. Let _rejectElement_ be ! CreateBuiltinFunction(_rejectSteps_, &laquo; [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] &raquo;).
           1. Set _rejectElement_.[[AlreadyCalled]] to _alreadyCalled_.
           1. Set _rejectElement_.[[Index]] to _index_.
           1. Set _rejectElement_.[[Values]] to _values_.
@@ -89,13 +89,13 @@ contributors: Jason Williams &amp; Robert Pamely
         1. Let _values_ be _F_.[[Values]].
         1. Let _promiseCapability_ be _F_.[[Capability]].
         1. Let _remainingElementsCount_ be _F_.[[RemainingElements]].
-        1. Let _obj_ be ObjectCreate(%ObjectPrototype%).
-        1. Perform CreateDataProperty(_obj_, `"status"`, `"fulfilled"`).
-        1. Perform CreateDataProperty(_obj_, `"value"`, _x_).
+        1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
+        1. Perform ! CreateDataProperty(_obj_, `"status"`, `"fulfilled"`).
+        1. Perform ! CreateDataProperty(_obj_, `"value"`, _x_).
         1. Set _values_[_index_] to be _obj_.
         1. Set _remainingElementsCount_.[[Value]] to _remainingElementsCount_.[[Value]] - 1.
         1. If _remainingElementsCount_.[[Value]] is 0, then
-          1. Let _valuesArray_ be CreateArrayFromList(_values_).
+          1. Let _valuesArray_ be ! CreateArrayFromList(_values_).
           1. Return ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _valuesArray_ &raquo;).
         1. Return *undefined*.
       </emu-alg>
@@ -115,9 +115,9 @@ contributors: Jason Williams &amp; Robert Pamely
         1. Let _values_ be _F_.[[Values]].
         1. Let _promiseCapability_ be _F_.[[Capability]].
         1. Let _remainingElementsCount_ be _F_.[[RemainingElements]].
-        1. Let _obj_ be ObjectCreate(%ObjectPrototype%).
-        1. Perform CreateDataProperty(_obj_, `"status"`, `"rejected"`).
-        1. Perform CreateDataProperty(_obj_, `"reason"`, _x_).
+        1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
+        1. Perform ! CreateDataProperty(_obj_, `"status"`, `"rejected"`).
+        1. Perform ! CreateDataProperty(_obj_, `"reason"`, _x_).
         1. Set _values_[_index_] to be _obj_.
         1. Set _remainingElementsCount_.[[Value]] to _remainingElementsCount_.[[Value]] - 1.
         1. If _remainingElementsCount_.[[Value]] is 0, then
