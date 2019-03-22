@@ -104,6 +104,34 @@ Promise.allSettled(requests).finally(() => {
 * https://www.npmjs.com/package/es2015-promise.allsettled
 * https://www.npmjs.com/package/maybe
 
+## Naming in other languages
+
+Similar functionality exists in other languages with different names. The following examples were contributed by jasonwilliams and benjamingr.
+
+**Rust**
+
+[`futures::join`](https://rust-lang-nursery.github.io/futures-api-docs/0.3.0-alpha.5/futures/macro.join.html) (similar to `Promise.allSettled`). "Polls multiple futures simultaneously, returning a tuple of all results once complete."
+
+[`futures::try_join`](https://rust-lang-nursery.github.io/futures-api-docs/0.3.0-alpha.5/futures/macro.try_join.html) (similar to `Promise.all`)
+
+**C#**
+
+`Task.WhenAll` (similar to ECMAScript `Promise.all`). You can use either try/catch or `TaskContinuationOptions.OnlyOnFaulted` to achieve the same behavior as `allSettled`.
+
+`Task.WhenAny` (similar to ECMAScript `Promise.race`)
+
+**Python**
+
+[`asyncio.wait`](https://docs.python.org/3/library/asyncio-task.html#asyncio.wait) using the `ALL_COMPLETED` option (similar to `Promise.allSettled`). Returns task objects which are akin to the `allSettled` inspection results.
+
+**Java**
+
+[`allOf`](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#allOf-java.util.concurrent.CompletableFuture...-) (similar to `Promise.all`)
+
+**Dart**
+
+[`Future.wait`](https://api.dartlang.org/stable/2.0.0/dart-async/Future/wait.html) (similar to ECMAScript `Promise.all`)
+
 ## Further reading
 
 * https://www.bennadel.com/blog/3289-implementing-q-s-allsettled-promise-method-in-bluebird.htm
