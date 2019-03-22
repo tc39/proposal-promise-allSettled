@@ -106,7 +106,7 @@ Promise.allSettled(requests).finally(() => {
 
 ## Naming in other languages
 
-Similar functionality exists in other languages with different names. The following examples were contributed by jasonwilliams and benjamingr.
+Similar functionality exists in other languages with different names. Since there is no uniform naming mechanism across languages, this proposal follows the naming precedent of userland JavaScript libraries shown above. The following examples were contributed by jasonwilliams and benjamingr. 
 
 **Rust**
 
