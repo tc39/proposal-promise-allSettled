@@ -153,4 +153,4 @@ Similar functionality exists in other languages with different names. Since ther
 
 ## Implementations
 
-* https://www.npmjs.com/package/promise.allsettled
+* [Spec-compliant polyfill](https://www.npmjs.com/package/promise.allsettled)
