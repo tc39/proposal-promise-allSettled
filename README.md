@@ -96,12 +96,14 @@ Promise.allSettled(requests).finally(() => {
 
 ## Userland implementations
 
+* https://www.npmjs.com/package/promise.allsettled
 * https://www.npmjs.com/package/q
 * https://www.npmjs.com/package/rsvp
 * http://bluebirdjs.com/docs/api/reflect.html
 * https://www.npmjs.com/package/promise-settle
 * https://github.com/cujojs/when/blob/master/docs/api.md#whensettle
 * https://www.npmjs.com/package/es2015-promise.allsettled
+* https://www.npmjs.com/package/promise-all-settled
 * https://www.npmjs.com/package/maybe
 
 ## Naming in other languages
@@ -151,4 +153,4 @@ Similar functionality exists in other languages with different names. Since ther
 
 ## Implementations
 
-* none yet
+* [Spec-compliant polyfill](https://www.npmjs.com/package/promise.allsettled)
