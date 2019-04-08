@@ -38,8 +38,7 @@ contributors: Jason Williams, Robert Pamely, Mathias Bynens
         1. Let _values_ be a new empty List.
         1. Let _remainingElementsCount_ be a new Record { [[Value]]: 1 }.
         1. Let _index_ be 0.
-        1. Let _promiseResolve_ be Get(_constructor_, `"resolve"`).
-        1. ReturnIfAbrupt(_promiseResolve_).
+        1. Let _promiseResolve_ be ? GetMethod(_constructor_, `"resolve"`).
         1. Repeat,
           1. Let _next_ be IteratorStep(_iteratorRecord_).
           1. If _next_ is an abrupt completion, set _iteratorRecord_.[[Done]] to *true*.
