@@ -21,12 +21,11 @@ There are four main combinators in the `Promise` landscape.
 
 These are all commonly available in userland promise libraries, and they’re all independently useful, each one serving different use cases.
 
-A common use case that I and many others come across, is to want to settle all promises within an array. Due to the short circuit nature of `Promise.all()` any rejected promise will make the resulting promise reject while silently discarding other results.
-The key feature of the `.allSettled()` method is that it allows us to settle all promises.
+A common use case for _this_ combinator is wanting to take an action after multiple requests have completed, regardless of their success or failure.
+Other Promise combinators can short-circuit, discarding the results of input values that lose the race to reach a certain state.
+`Promise.allSettled` is unique in always waiting for all of its input values.
 
-`Promise.allSettled()` returns a promise that is fulfilled with an array of promise state snapshots, but only after all the original promises have settled, i.e. become either fulfilled or rejected.
-
-This method is used in its static form on arrays of promises, in order to execute a number of operations concurrently and be notified when they all finish, regardless of success or failure.
+`Promise.allSettled` returns a promise that is fulfilled with an array of promise state snapshots, but only after all the original promises have settled, i.e. become either fulfilled or rejected.
 
 ## Why `allSettled`?
 
