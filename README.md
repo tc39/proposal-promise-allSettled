@@ -10,6 +10,17 @@ ECMAScript proposal and reference implementation for `Promise.allSettled`.
 
 ## Overview and motivation
 
+There are four main combinators in the `Promise` landscape.
+
+| name                 | description                                     |                                                                     |
+| -------------------- | ----------------------------------------------- | ------------------------------------------------------------------- |
+| `Promise.allSettled` | does not short-circuit                          | this proposal 🆕                                                     |
+| `Promise.all`        | short-circuits when an input value is rejected  | added in ES2015 ✅                                                   |
+| `Promise.race`       | short-circuits when an input value is settled   | added in ES2015 ✅                                                   |
+| `Promise.any`        | short-circuits when an input value is fulfilled | [separate proposal](https://github.com/tc39/proposal-promise-any) 🔜 |
+
+These are all commonly available in userland promise libraries, and they’re all independently useful, each one serving different use cases.
+
 A common use case that I and many others come across, is to want to settle all promises within an array. Due to the short circuit nature of `Promise.all()` any rejected promise will make the resulting promise reject while silently discarding other results.
 The key feature of the `.allSettled()` method is that it allows us to settle all promises.
 
