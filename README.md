@@ -163,4 +163,5 @@ Similar functionality exists in other languages with different names. Since ther
 
 ## Implementations
 
+* [SpiderMonkey](https://bugzilla.mozilla.org/show_bug.cgi?id=1539694), shipping in Firefox 68 Nightly
 * [Spec-compliant polyfill](https://www.npmjs.com/package/promise.allsettled)
