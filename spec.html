@@ -38,6 +38,8 @@ contributors: Jason Williams, Robert Pamely, Mathias Bynens
         1. Let _values_ be a new empty List.
         1. Let _remainingElementsCount_ be a new Record { [[Value]]: 1 }.
         1. Let _index_ be 0.
+        1. Let _promiseResolve_ be ? Get(_constructor_, `"resolve"`).
+        1. If IsCallable(_promiseResolve_) is *false*, throw a *TypeError* exception.
         1. Repeat,
           1. Let _next_ be IteratorStep(_iteratorRecord_).
           1. If _next_ is an abrupt completion, set _iteratorRecord_.[[Done]] to *true*.
@@ -53,7 +55,7 @@ contributors: Jason Williams, Robert Pamely, Mathias Bynens
           1. If _nextValue_ is an abrupt completion, set _iteratorRecord_.[[Done]] to *true*.
           1. ReturnIfAbrupt(_nextValue_).
           1. Append *undefined* to _values_.
-          1. Let _nextPromise_ be ? Invoke(_constructor_, `"resolve"`, &laquo; _nextValue_ &raquo;).
+          1. Let _nextPromise_ be ? Call(_promiseResolve_, _constructor_, &laquo; _nextValue_ &raquo;).
           1. Let _steps_ be the algorithm steps defined in <emu-xref href="#sec-promise.allsettled-resolve-element-functions" title></emu-xref>.
           1. Let _resolveElement_ be ! CreateBuiltinFunction(_steps_, &laquo; [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] &raquo;).
           1. Let _alreadyCalled_ be a new Record { [[Value]]: *false* }.
