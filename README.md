@@ -164,4 +164,5 @@ Similar functionality exists in other languages with different names. Since ther
 ## Implementations
 
 * [SpiderMonkey](https://bugzilla.mozilla.org/show_bug.cgi?id=1539694), shipping in Firefox 68 Nightly
+* [V8](https://bugs.chromium.org/p/v8/issues/detail?id=9060), behind the `--harmony-promise-all-settled` flag
 * [Spec-compliant polyfill](https://www.npmjs.com/package/promise.allsettled)
