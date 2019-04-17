@@ -155,6 +155,7 @@ Similar functionality exists in other languages with different names. Since ther
 
 - [September 2018](https://tc39.github.io/tc39-notes/2018-09_sept-27.html#promiseallsettled-for-stage-1)
 - [January 2019](https://tc39.github.io/tc39-notes/2019-01_jan-30.html#promiseallsettled)
+- [March 2019](https://github.com/rwaldron/tc39-notes/blob/master/es10/2019-03/mar-26.md#promiseallsettled-for-stage-3)
 
 ## Specification
 
