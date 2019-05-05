@@ -40,12 +40,8 @@ Currently you would need to iterate through the array of promises and return a n
 ```js
 function reflect(promise) {
   return promise.then(
-    (v) => {
-      return { status: 'fulfilled', value: v };
-    },
-    (error) => {
-      return { status: 'rejected', reason: error };
-    }
+    v => ({ status: 'fulfilled', value: v }),
+    error => ({ status: 'rejected', reason: error })
   );
 }
 
