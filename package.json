@@ -5,7 +5,7 @@
   "description": "ECMAScript allSettled proposal",
   "repository": "tc39/proposal-promise-allSettled",
   "author": "ECMA TC39",
-  "license": "SEE LICENSE IN https://tc39.github.io/ecma262/#sec-copyright-and-software-license",
+  "license": "SEE LICENSE IN https://tc39.es/ecma262/#sec-copyright-and-software-license",
   "scripts": {
     "build": "ecmarkup spec.html index.html --verbose --toc"
   },

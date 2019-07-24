@@ -6,11 +6,11 @@ function Search(menu) {
   this.$search = document.getElementById('menu-search');
   this.$searchBox = document.getElementById('menu-search-box');
   this.$searchResults = document.getElementById('menu-search-results');
-  
+
   this.loadBiblio();
-  
+
   document.addEventListener('keydown', this.documentKeydown.bind(this));
-  
+
   this.$searchBox.addEventListener('keydown', debounce(this.searchBoxKeydown.bind(this), { stopPropagation: true }));
   this.$searchBox.addEventListener('keyup', debounce(this.searchBoxKeyup.bind(this), { stopPropagation: true }));
 }
@@ -52,7 +52,7 @@ Search.prototype.searchBoxKeyup = function (e) {
   if (e.keyCode === 13 || e.keyCode === 9) {
     return;
   }
-  
+
   this.search(e.target.value);
 }
 
@@ -75,19 +75,19 @@ Search.prototype.triggerSearch = function (e) {
 // prefer shorter matches.
 function relevance(result, searchString) {
   var relevance = 0;
-  
+
   relevance = Math.max(0, 8 - result.match.chunks) << 7;
-  
+
   if (result.match.caseMatch) {
     relevance *= 2;
   }
-  
+
   if (result.match.prefix) {
     relevance += 2048
   }
-  
+
   relevance += Math.max(0, 255 - result.entry.key.length);
-  
+
   return relevance;
 }
 
@@ -101,12 +101,12 @@ Search.prototype.search = function (searchString) {
   } else {
     this.showSearch();
   }
-  
+
   if (searchString.length === 1) {
     this.displayResults([]);
     return;
   }
-    
+
   var results;
 
   if (/^[\d\.]*$/.test(searchString)) {
@@ -117,7 +117,7 @@ Search.prototype.search = function (searchString) {
     });
   } else {
     results = [];
-    
+
     for (var i = 0; i < this.biblio.length; i++) {
       var entry = this.biblio[i];
       if (!entry.key) {
@@ -130,11 +130,11 @@ Search.prototype.search = function (searchString) {
         results.push({ entry: entry, match: match });
       }
     }
-  
+
     results.forEach(function (result) {
       result.relevance = relevance(result, searchString);
     });
-    
+
     results = results.sort(function (a, b) { return b.relevance - a.relevance });
 
   }
@@ -142,7 +142,7 @@ Search.prototype.search = function (searchString) {
   if (results.length > 50) {
     results = results.slice(0, 50);
   }
-  
+
   this.displayResults(results);
 }
 Search.prototype.hideSearch = function () {
@@ -159,7 +159,7 @@ Search.prototype.selectResult = function () {
   if ($first) {
     document.location = $first.getAttribute('href');
   }
-  
+
   this.$searchBox.value = '';
   this.$searchBox.blur();
   this.displayResults([]);
@@ -173,7 +173,7 @@ Search.prototype.selectResult = function () {
 Search.prototype.displayResults = function (results) {
   if (results.length > 0) {
     this.$searchResults.classList.remove('no-results');
-    
+
     var html = '<ul>';
 
     results.forEach(function (result) {
@@ -190,7 +190,7 @@ Search.prototype.displayResults = function (results) {
       } else if (entry.type === 'production') {
         text = entry.key;
         cssClass = 'prod';
-        id = entry.id;  
+        id = entry.id;
       } else if (entry.type === 'op') {
         text = entry.key;
         cssClass = 'op';
@@ -225,8 +225,8 @@ function Menu() {
   this.$toc = document.querySelector('#menu-toc > ol');
   this.$specContainer = document.getElementById('spec-container');
   this.search = new Search(this);
-  
-  this._pinnedIds = {}; 
+
+  this._pinnedIds = {};
   this.loadPinEntries();
 
   // toggle menu
@@ -299,7 +299,7 @@ Menu.prototype.revealInToc = function (path) {
     current[i].classList.remove('revealed');
     current[i].classList.remove('revealed-leaf');
   }
-  
+
   var current = this.$toc;
   var index = 0;
   while (index < path.length) {
@@ -321,9 +321,9 @@ Menu.prototype.revealInToc = function (path) {
         current = children[i].querySelector('ol');
         index++;
         break;
-      }      
+      }
     }
-    
+
   }
 }
 
@@ -332,18 +332,18 @@ function findActiveClause(root, path) {
   var $clause;
   var found = false;
   var path = path || [];
-  
+
   while ($clause = clauses.nextNode()) {
     var rect = $clause.getBoundingClientRect();
     var $header = $clause.children[0];
     var marginTop = parseInt(getComputedStyle($header)["margin-top"]);
-    
+
     if ((rect.top - marginTop) <= 0 && rect.bottom > 0) {
       found = true;
       return findActiveClause($clause, path.concat($clause)) || path;
     }
   }
-  
+
   return path;
 }
 
@@ -368,7 +368,7 @@ function ClauseWalker(root) {
     },
     false
     );
-  
+
   return treeWalker;
 }
 
@@ -451,7 +451,7 @@ Menu.prototype.loadPinEntries = function () {
   } catch (e) {
     return;
   }
-  
+
   var pinsString = window.localStorage.pinEntries;
   if (!pinsString) return;
   var pins = JSON.parse(pinsString);
@@ -582,11 +582,11 @@ function fuzzysearch (searchString, haystack, caseInsensitive) {
   var chunks = 1;
   var finding = false;
   var prefix = true;
-  
+
   if (qlen > tlen) {
     return false;
   }
-  
+
   if (qlen === tlen) {
     if (searchString === haystack) {
       return { caseMatch: true, chunks: 1, prefix: true };
@@ -596,7 +596,7 @@ function fuzzysearch (searchString, haystack, caseInsensitive) {
       return false;
     }
   }
-  
+
   outer: for (var i = 0, j = 0; i < qlen; i++) {
     var nch = searchString[i];
     while (j < tlen) {
@@ -610,12 +610,12 @@ function fuzzysearch (searchString, haystack, caseInsensitive) {
         finding = false;
       }
     }
-    
+
     if (caseInsensitive) { return false }
-    
+
     return fuzzysearch(searchString.toLowerCase(), haystack.toLowerCase(), true);
   }
-  
+
   return { caseMatch: !caseInsensitive, chunks: chunks, prefix: j <= qlen };
 }
 
@@ -812,7 +812,7 @@ function sortByClauseNumber(c1, c2) {
     if (i >= c2c.length) {
       return 1;
     }
-    
+
     var c1 = c1c[i];
     var c2 = c2c[i];
     var c1cn = Number(c1);
@@ -1328,7 +1328,7 @@ emu-production > ins, emu-production > del,
 emu-grammar > ins, emu-grammar > del {
   display: block;
 }
-emu-rhs > ins, emu-rhs > del { 
+emu-rhs > ins, emu-rhs > del {
   display: inline;
 }
 
@@ -1557,10 +1557,10 @@ tr.del > td {
   flex-grow: 0;
   flex-shrink: 0;
   width: 100%;
-  
+
   display: flex;
   flex-direction: column;
-  
+
   max-height: 300px;
 }
 
@@ -1798,7 +1798,7 @@ li.menu-search-result-term:before {
 
 @media print {
   #menu-toggle {
-    display: none; 
+    display: none;
   }
 }
 </style></head><body><div id="menu-toggle">☰</div><div id="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins</div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle-none"></span><a href="#intro" title="Introduction">Introduction</a></li><li><span class="item-toggle">◢</span><a href="#sec-promise.allsettled" title="Promise.allSettled ( iterable )"><span class="secnum">1</span> Promise.allSettled ( <var>iterable</var> )</a><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-performpromiseallsettled" title="Runtime Semantics: PerformPromiseAllSettled ( iteratorRecord, constructor, resultCapability )"><span class="secnum">1.1</span> RS: PerformPromiseAllSettled ( <var>iteratorRecord</var>, <var>constructor</var>, <var>resultCapability</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-promise.allsettled-resolve-element-functions" title="Promise.allSettled Resolve Element Functions"><span class="secnum">1.2</span> <code>Promise.allSettled</code> Resolve Element Functions</a></li><li><span class="item-toggle-none"></span><a href="#sec-promise.allsettled-reject-element-functions" title="Promise.allSettled Reject Element Functions"><span class="secnum">1.3</span> <code>Promise.allSettled</code> Reject Element Functions</a></li></ol></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version first">Stage 3 Draft / April 12, 2019</h1><h1 class="title">Promise.allSettled</h1>
@@ -1811,7 +1811,7 @@ li.menu-search-result-term:before {
 <emu-clause id="sec-promise.allsettled">
     <h1><span class="secnum">1</span>Promise.allSettled ( <var>iterable</var> )</h1>
     <p>The <code>allSettled</code> function returns a promise that is fulfilled with an array of promise state snapshots, but only after all the original promises have settled, i.e. become either fulfilled or rejected. It resolves all elements of the passed iterable to promises as it runs this algorithm.</p>
-    <emu-alg><ol><li>Let <var>C</var> be the <emu-val>this</emu-val> value.</li><li>If <emu-xref aoid="Type" id="_ref_2"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>C</var>) is not Object, throw a <emu-val>TypeError</emu-val> exception.</li><li>Let <var>promiseCapability</var> be ?&nbsp;<emu-xref aoid="NewPromiseCapability" id="_ref_3"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(<var>C</var>).</li><li>Let <var>iteratorRecord</var> be <emu-xref aoid="GetIterator" id="_ref_4"><a href="https://tc39.github.io/ecma262/#sec-getiterator">GetIterator</a></emu-xref>(<var>iterable</var>).</li><li><emu-xref aoid="IfAbruptRejectPromise" id="_ref_5"><a href="https://tc39.github.io/ecma262/#sec-ifabruptrejectpromise">IfAbruptRejectPromise</a></emu-xref>(<var>iteratorRecord</var>, <var>promiseCapability</var>).</li><li>Let <var>result</var> be <emu-xref aoid="PerformPromiseAllSettled" id="_ref_6"><a href="#sec-performpromiseallsettled">PerformPromiseAllSettled</a></emu-xref>(<var>iteratorRecord</var>, <var>C</var>, <var>promiseCapability</var>).</li><li>If <var>result</var> is an <emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, then<ol><li>If <var>iteratorRecord</var>.[[Done]] is <emu-val>false</emu-val>, set <var>result</var> to <emu-xref aoid="IteratorClose" id="_ref_7"><a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a></emu-xref>(<var>iteratorRecord</var>, <var>result</var>).</li><li><emu-xref aoid="IfAbruptRejectPromise" id="_ref_8"><a href="https://tc39.github.io/ecma262/#sec-ifabruptrejectpromise">IfAbruptRejectPromise</a></emu-xref>(<var>result</var>, <var>promiseCapability</var>).</li></ol></li><li>Return <emu-xref aoid="Completion" id="_ref_9"><a href="https://tc39.github.io/ecma262/#sec-completion-record-specification-type">Completion</a></emu-xref>(<var>result</var>).
+    <emu-alg><ol><li>Let <var>C</var> be the <emu-val>this</emu-val> value.</li><li>If <emu-xref aoid="Type" id="_ref_2"><a href="https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>C</var>) is not Object, throw a <emu-val>TypeError</emu-val> exception.</li><li>Let <var>promiseCapability</var> be ?&nbsp;<emu-xref aoid="NewPromiseCapability" id="_ref_3"><a href="https://tc39.es/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(<var>C</var>).</li><li>Let <var>iteratorRecord</var> be <emu-xref aoid="GetIterator" id="_ref_4"><a href="https://tc39.es/ecma262/#sec-getiterator">GetIterator</a></emu-xref>(<var>iterable</var>).</li><li><emu-xref aoid="IfAbruptRejectPromise" id="_ref_5"><a href="https://tc39.es/ecma262/#sec-ifabruptrejectpromise">IfAbruptRejectPromise</a></emu-xref>(<var>iteratorRecord</var>, <var>promiseCapability</var>).</li><li>Let <var>result</var> be <emu-xref aoid="PerformPromiseAllSettled" id="_ref_6"><a href="#sec-performpromiseallsettled">PerformPromiseAllSettled</a></emu-xref>(<var>iteratorRecord</var>, <var>C</var>, <var>promiseCapability</var>).</li><li>If <var>result</var> is an <emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.es/ecma262/#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, then<ol><li>If <var>iteratorRecord</var>.[[Done]] is <emu-val>false</emu-val>, set <var>result</var> to <emu-xref aoid="IteratorClose" id="_ref_7"><a href="https://tc39.es/ecma262/#sec-iteratorclose">IteratorClose</a></emu-xref>(<var>iteratorRecord</var>, <var>result</var>).</li><li><emu-xref aoid="IfAbruptRejectPromise" id="_ref_8"><a href="https://tc39.es/ecma262/#sec-ifabruptrejectpromise">IfAbruptRejectPromise</a></emu-xref>(<var>result</var>, <var>promiseCapability</var>).</li></ol></li><li>Return <emu-xref aoid="Completion" id="_ref_9"><a href="https://tc39.es/ecma262/#sec-completion-record-specification-type">Completion</a></emu-xref>(<var>result</var>).
     </li></ol></emu-alg>
     <emu-note><span class="note">Note</span><div class="note-contents">
       <p>The <code>allSettled</code> function requires its <emu-val>this</emu-val> value to be a constructor function that supports the parameter conventions of the <code>Promise</code> constructor.</p>
@@ -1820,7 +1820,7 @@ li.menu-search-result-term:before {
     <emu-clause id="sec-performpromiseallsettled" aoid="PerformPromiseAllSettled">
       <h1><span class="secnum">1.1</span>Runtime Semantics: PerformPromiseAllSettled ( <var>iteratorRecord</var>, <var>constructor</var>, <var>resultCapability</var> )</h1>
       <p>When the PerformPromiseAllSettled abstract operation is called with arguments <var>iteratorRecord</var>, <var>constructor</var>, and <var>resultCapability</var>, the following steps are taken:</p>
-      <emu-alg><ol><li>Assert: !&nbsp;<emu-xref aoid="IsConstructor" id="_ref_10"><a href="https://tc39.github.io/ecma262/#sec-isconstructor">IsConstructor</a></emu-xref>(<var>constructor</var>) is <emu-val>true</emu-val>.</li><li>Assert: <var>resultCapability</var> is a PromiseCapability <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref>.</li><li>Let <var>values</var> be a new empty <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li><li>Let <var>remainingElementsCount</var> be a new <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref> { [[Value]]: 1 }.</li><li>Let <var>index</var> be 0.</li><li>Repeat,<ol><li>Let <var>next</var> be <emu-xref aoid="IteratorStep" id="_ref_11"><a href="https://tc39.github.io/ecma262/#sec-iteratorstep">IteratorStep</a></emu-xref>(<var>iteratorRecord</var>).</li><li>If <var>next</var> is an <emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, set <var>iteratorRecord</var>.[[Done]] to <emu-val>true</emu-val>.</li><li><emu-xref aoid="ReturnIfAbrupt" id="_ref_12"><a href="https://tc39.github.io/ecma262/#sec-returnifabrupt">ReturnIfAbrupt</a></emu-xref>(<var>next</var>).</li><li>If <var>next</var> is <emu-val>false</emu-val>, then<ol><li>Set <var>iteratorRecord</var>.[[Done]] to <emu-val>true</emu-val>.</li><li>Set <var>remainingElementsCount</var>.[[Value]] to <var>remainingElementsCount</var>.[[Value]] - 1.</li><li>If <var>remainingElementsCount</var>.[[Value]] is 0, then<ol><li>Let <var>valuesArray</var> be <emu-xref aoid="CreateArrayFromList" id="_ref_13"><a href="https://tc39.github.io/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>values</var>).</li><li>Perform ?&nbsp;<emu-xref aoid="Call" id="_ref_14"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>resultCapability</var>.[[Resolve]], <emu-val>undefined</emu-val>, « <var>valuesArray</var> »).</li></ol></li><li>Return <var>resultCapability</var>.[[Promise]].</li></ol></li><li>Let <var>nextValue</var> be <emu-xref aoid="IteratorValue" id="_ref_15"><a href="https://tc39.github.io/ecma262/#sec-iteratorvalue">IteratorValue</a></emu-xref>(<var>next</var>).</li><li>If <var>nextValue</var> is an <emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, set <var>iteratorRecord</var>.[[Done]] to <emu-val>true</emu-val>.</li><li><emu-xref aoid="ReturnIfAbrupt" id="_ref_16"><a href="https://tc39.github.io/ecma262/#sec-returnifabrupt">ReturnIfAbrupt</a></emu-xref>(<var>nextValue</var>).</li><li>Append <emu-val>undefined</emu-val> to <var>values</var>.</li><li>Let <var>nextPromise</var> be ?&nbsp;<emu-xref aoid="Invoke" id="_ref_17"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>constructor</var>, <code>"resolve"</code>, « <var>nextValue</var> »).</li><li>Let <var>steps</var> be the algorithm steps defined in <emu-xref href="#sec-promise.allsettled-resolve-element-functions" title="" id="_ref_0"><a href="#sec-promise.allsettled-resolve-element-functions"><code>Promise.allSettled</code> Resolve Element Functions</a></emu-xref>.</li><li>Let <var>resolveElement</var> be !&nbsp;<emu-xref aoid="CreateBuiltinFunction" id="_ref_18"><a href="https://tc39.github.io/ecma262/#sec-createbuiltinfunction">CreateBuiltinFunction</a></emu-xref>(<var>steps</var>, « [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] »).</li><li>Let <var>alreadyCalled</var> be a new <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref> { [[Value]]: <emu-val>false</emu-val> }.</li><li>Set <var>resolveElement</var>.[[AlreadyCalled]] to <var>alreadyCalled</var>.</li><li>Set <var>resolveElement</var>.[[Index]] to <var>index</var>.</li><li>Set <var>resolveElement</var>.[[Values]] to <var>values</var>.</li><li>Set <var>resolveElement</var>.[[Capability]] to <var>resultCapability</var>.</li><li>Set <var>resolveElement</var>.[[RemainingElements]] to <var>remainingElementsCount</var>.</li><li>Let <var>rejectSteps</var> be the algorithm steps defined in <emu-xref href="#sec-promise.allsettled-reject-element-functions" title="" id="_ref_1"><a href="#sec-promise.allsettled-reject-element-functions"><code>Promise.allSettled</code> Reject Element Functions</a></emu-xref>.</li><li>Let <var>rejectElement</var> be !&nbsp;<emu-xref aoid="CreateBuiltinFunction" id="_ref_19"><a href="https://tc39.github.io/ecma262/#sec-createbuiltinfunction">CreateBuiltinFunction</a></emu-xref>(<var>rejectSteps</var>, « [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] »).</li><li>Set <var>rejectElement</var>.[[AlreadyCalled]] to <var>alreadyCalled</var>.</li><li>Set <var>rejectElement</var>.[[Index]] to <var>index</var>.</li><li>Set <var>rejectElement</var>.[[Values]] to <var>values</var>.</li><li>Set <var>rejectElement</var>.[[Capability]] to <var>resultCapability</var>.</li><li>Set <var>rejectElement</var>.[[RemainingElements]] to <var>remainingElementsCount</var>.</li><li>Set <var>remainingElementsCount</var>.[[Value]] to <var>remainingElementsCount</var>.[[Value]] + 1.</li><li>Perform ?&nbsp;<emu-xref aoid="Invoke" id="_ref_20"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>nextPromise</var>, <code>"then"</code>, « <var>resolveElement</var>, <var>rejectElement</var> »).</li><li>Increase <var>index</var> by 1.
+      <emu-alg><ol><li>Assert: !&nbsp;<emu-xref aoid="IsConstructor" id="_ref_10"><a href="https://tc39.es/ecma262/#sec-isconstructor">IsConstructor</a></emu-xref>(<var>constructor</var>) is <emu-val>true</emu-val>.</li><li>Assert: <var>resultCapability</var> is a PromiseCapability <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref>.</li><li>Let <var>values</var> be a new empty <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li><li>Let <var>remainingElementsCount</var> be a new <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref> { [[Value]]: 1 }.</li><li>Let <var>index</var> be 0.</li><li>Repeat,<ol><li>Let <var>next</var> be <emu-xref aoid="IteratorStep" id="_ref_11"><a href="https://tc39.es/ecma262/#sec-iteratorstep">IteratorStep</a></emu-xref>(<var>iteratorRecord</var>).</li><li>If <var>next</var> is an <emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.es/ecma262/#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, set <var>iteratorRecord</var>.[[Done]] to <emu-val>true</emu-val>.</li><li><emu-xref aoid="ReturnIfAbrupt" id="_ref_12"><a href="https://tc39.es/ecma262/#sec-returnifabrupt">ReturnIfAbrupt</a></emu-xref>(<var>next</var>).</li><li>If <var>next</var> is <emu-val>false</emu-val>, then<ol><li>Set <var>iteratorRecord</var>.[[Done]] to <emu-val>true</emu-val>.</li><li>Set <var>remainingElementsCount</var>.[[Value]] to <var>remainingElementsCount</var>.[[Value]] - 1.</li><li>If <var>remainingElementsCount</var>.[[Value]] is 0, then<ol><li>Let <var>valuesArray</var> be <emu-xref aoid="CreateArrayFromList" id="_ref_13"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>values</var>).</li><li>Perform ?&nbsp;<emu-xref aoid="Call" id="_ref_14"><a href="https://tc39.es/ecma262/#sec-call">Call</a></emu-xref>(<var>resultCapability</var>.[[Resolve]], <emu-val>undefined</emu-val>, « <var>valuesArray</var> »).</li></ol></li><li>Return <var>resultCapability</var>.[[Promise]].</li></ol></li><li>Let <var>nextValue</var> be <emu-xref aoid="IteratorValue" id="_ref_15"><a href="https://tc39.es/ecma262/#sec-iteratorvalue">IteratorValue</a></emu-xref>(<var>next</var>).</li><li>If <var>nextValue</var> is an <emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.es/ecma262/#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, set <var>iteratorRecord</var>.[[Done]] to <emu-val>true</emu-val>.</li><li><emu-xref aoid="ReturnIfAbrupt" id="_ref_16"><a href="https://tc39.es/ecma262/#sec-returnifabrupt">ReturnIfAbrupt</a></emu-xref>(<var>nextValue</var>).</li><li>Append <emu-val>undefined</emu-val> to <var>values</var>.</li><li>Let <var>nextPromise</var> be ?&nbsp;<emu-xref aoid="Invoke" id="_ref_17"><a href="https://tc39.es/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>constructor</var>, <code>"resolve"</code>, « <var>nextValue</var> »).</li><li>Let <var>steps</var> be the algorithm steps defined in <emu-xref href="#sec-promise.allsettled-resolve-element-functions" title="" id="_ref_0"><a href="#sec-promise.allsettled-resolve-element-functions"><code>Promise.allSettled</code> Resolve Element Functions</a></emu-xref>.</li><li>Let <var>resolveElement</var> be !&nbsp;<emu-xref aoid="CreateBuiltinFunction" id="_ref_18"><a href="https://tc39.es/ecma262/#sec-createbuiltinfunction">CreateBuiltinFunction</a></emu-xref>(<var>steps</var>, « [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] »).</li><li>Let <var>alreadyCalled</var> be a new <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref> { [[Value]]: <emu-val>false</emu-val> }.</li><li>Set <var>resolveElement</var>.[[AlreadyCalled]] to <var>alreadyCalled</var>.</li><li>Set <var>resolveElement</var>.[[Index]] to <var>index</var>.</li><li>Set <var>resolveElement</var>.[[Values]] to <var>values</var>.</li><li>Set <var>resolveElement</var>.[[Capability]] to <var>resultCapability</var>.</li><li>Set <var>resolveElement</var>.[[RemainingElements]] to <var>remainingElementsCount</var>.</li><li>Let <var>rejectSteps</var> be the algorithm steps defined in <emu-xref href="#sec-promise.allsettled-reject-element-functions" title="" id="_ref_1"><a href="#sec-promise.allsettled-reject-element-functions"><code>Promise.allSettled</code> Reject Element Functions</a></emu-xref>.</li><li>Let <var>rejectElement</var> be !&nbsp;<emu-xref aoid="CreateBuiltinFunction" id="_ref_19"><a href="https://tc39.es/ecma262/#sec-createbuiltinfunction">CreateBuiltinFunction</a></emu-xref>(<var>rejectSteps</var>, « [[AlreadyCalled]], [[Index]], [[Values]], [[Capability]], [[RemainingElements]] »).</li><li>Set <var>rejectElement</var>.[[AlreadyCalled]] to <var>alreadyCalled</var>.</li><li>Set <var>rejectElement</var>.[[Index]] to <var>index</var>.</li><li>Set <var>rejectElement</var>.[[Values]] to <var>values</var>.</li><li>Set <var>rejectElement</var>.[[Capability]] to <var>resultCapability</var>.</li><li>Set <var>rejectElement</var>.[[RemainingElements]] to <var>remainingElementsCount</var>.</li><li>Set <var>remainingElementsCount</var>.[[Value]] to <var>remainingElementsCount</var>.[[Value]] + 1.</li><li>Perform ?&nbsp;<emu-xref aoid="Invoke" id="_ref_20"><a href="https://tc39.es/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>nextPromise</var>, <code>"then"</code>, « <var>resolveElement</var>, <var>rejectElement</var> »).</li><li>Increase <var>index</var> by 1.
       </li></ol></li></ol></emu-alg>
     </emu-clause>
 
@@ -1828,7 +1828,7 @@ li.menu-search-result-term:before {
       <h1><span class="secnum">1.2</span><code>Promise.allSettled</code> Resolve Element Functions</h1>
       <p>A <code>Promise.allSettled</code> resolve element function is an anonymous built-in function that is used to resolve a specific <code>Promise.allSettled</code> element. Each <code>Promise.allSettled</code> resolve element function has [[Index]], [[Values]], [[Capability]], [[RemainingElements]], and [[AlreadyCalled]] internal slots.</p>
       <p>When a <code>Promise.allSettled</code> resolve element function is called with argument <var>x</var>, the following steps are taken:</p>
-      <emu-alg><ol><li>Let <var>F</var> be the <emu-xref href="#active-function-object"><a href="https://tc39.github.io/ecma262/#active-function-object">active function object</a></emu-xref>.</li><li>Let <var>alreadyCalled</var> be <var>F</var>.[[AlreadyCalled]].</li><li>If <var>alreadyCalled</var>.[[Value]] is <emu-val>true</emu-val>, return <emu-val>undefined</emu-val>.</li><li>Set <var>alreadyCalled</var>.[[Value]] to <emu-val>true</emu-val>.</li><li>Let <var>index</var> be <var>F</var>.[[Index]].</li><li>Let <var>values</var> be <var>F</var>.[[Values]].</li><li>Let <var>promiseCapability</var> be <var>F</var>.[[Capability]].</li><li>Let <var>remainingElementsCount</var> be <var>F</var>.[[RemainingElements]].</li><li>Let <var>obj</var> be !&nbsp;<emu-xref aoid="ObjectCreate" id="_ref_21"><a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty" id="_ref_22"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <code>"status"</code>, <code>"fulfilled"</code>).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty" id="_ref_23"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <code>"value"</code>, <var>x</var>).</li><li>Set <var>values</var>[<var>index</var>] to be <var>obj</var>.</li><li>Set <var>remainingElementsCount</var>.[[Value]] to <var>remainingElementsCount</var>.[[Value]] - 1.</li><li>If <var>remainingElementsCount</var>.[[Value]] is 0, then<ol><li>Let <var>valuesArray</var> be !&nbsp;<emu-xref aoid="CreateArrayFromList" id="_ref_24"><a href="https://tc39.github.io/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>values</var>).</li><li>Return ?&nbsp;<emu-xref aoid="Call" id="_ref_25"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]], <emu-val>undefined</emu-val>, « <var>valuesArray</var> »).</li></ol></li><li>Return <emu-val>undefined</emu-val>.
+      <emu-alg><ol><li>Let <var>F</var> be the <emu-xref href="#active-function-object"><a href="https://tc39.es/ecma262/#active-function-object">active function object</a></emu-xref>.</li><li>Let <var>alreadyCalled</var> be <var>F</var>.[[AlreadyCalled]].</li><li>If <var>alreadyCalled</var>.[[Value]] is <emu-val>true</emu-val>, return <emu-val>undefined</emu-val>.</li><li>Set <var>alreadyCalled</var>.[[Value]] to <emu-val>true</emu-val>.</li><li>Let <var>index</var> be <var>F</var>.[[Index]].</li><li>Let <var>values</var> be <var>F</var>.[[Values]].</li><li>Let <var>promiseCapability</var> be <var>F</var>.[[Capability]].</li><li>Let <var>remainingElementsCount</var> be <var>F</var>.[[RemainingElements]].</li><li>Let <var>obj</var> be !&nbsp;<emu-xref aoid="ObjectCreate" id="_ref_21"><a href="https://tc39.es/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.es/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty" id="_ref_22"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <code>"status"</code>, <code>"fulfilled"</code>).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty" id="_ref_23"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <code>"value"</code>, <var>x</var>).</li><li>Set <var>values</var>[<var>index</var>] to be <var>obj</var>.</li><li>Set <var>remainingElementsCount</var>.[[Value]] to <var>remainingElementsCount</var>.[[Value]] - 1.</li><li>If <var>remainingElementsCount</var>.[[Value]] is 0, then<ol><li>Let <var>valuesArray</var> be !&nbsp;<emu-xref aoid="CreateArrayFromList" id="_ref_24"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>values</var>).</li><li>Return ?&nbsp;<emu-xref aoid="Call" id="_ref_25"><a href="https://tc39.es/ecma262/#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]], <emu-val>undefined</emu-val>, « <var>valuesArray</var> »).</li></ol></li><li>Return <emu-val>undefined</emu-val>.
       </li></ol></emu-alg>
       <p>The <code>"length"</code> property of a <code>Promise.allSettled</code> resolve element function is 1.</p>
     </emu-clause>
@@ -1837,13 +1837,13 @@ li.menu-search-result-term:before {
       <h1><span class="secnum">1.3</span><code>Promise.allSettled</code> Reject Element Functions</h1>
       <p>A <code>Promise.allSettled</code> reject element function is an anonymous built-in function that is used to reject a specific <code>Promise.allSettled</code> element. Each <code>Promise.allSettled</code> reject element function has [[Index]], [[Values]], [[Capability]], [[RemainingElements]], and [[AlreadyCalled]] internal slots.</p>
       <p>When a <code>Promise.allSettled</code> reject element function is called with argument <var>x</var>, the following steps are taken:</p>
-      <emu-alg><ol><li>Let <var>F</var> be the <emu-xref href="#active-function-object"><a href="https://tc39.github.io/ecma262/#active-function-object">active function object</a></emu-xref>.</li><li>Let <var>alreadyCalled</var> be <var>F</var>.[[AlreadyCalled]].</li><li>If <var>alreadyCalled</var>.[[Value]] is <emu-val>true</emu-val>, return <emu-val>undefined</emu-val>.</li><li>Set <var>alreadyCalled</var>.[[Value]] to <emu-val>true</emu-val>.</li><li>Let <var>index</var> be <var>F</var>.[[Index]].</li><li>Let <var>values</var> be <var>F</var>.[[Values]].</li><li>Let <var>promiseCapability</var> be <var>F</var>.[[Capability]].</li><li>Let <var>remainingElementsCount</var> be <var>F</var>.[[RemainingElements]].</li><li>Let <var>obj</var> be !&nbsp;<emu-xref aoid="ObjectCreate" id="_ref_26"><a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty" id="_ref_27"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <code>"status"</code>, <code>"rejected"</code>).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty" id="_ref_28"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <code>"reason"</code>, <var>x</var>).</li><li>Set <var>values</var>[<var>index</var>] to be <var>obj</var>.</li><li>Set <var>remainingElementsCount</var>.[[Value]] to <var>remainingElementsCount</var>.[[Value]] - 1.</li><li>If <var>remainingElementsCount</var>.[[Value]] is 0, then<ol><li>Let <var>valuesArray</var> be <emu-xref aoid="CreateArrayFromList" id="_ref_29"><a href="https://tc39.github.io/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>values</var>).</li><li>Return ?&nbsp;<emu-xref aoid="Call" id="_ref_30"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]], <emu-val>undefined</emu-val>, « <var>valuesArray</var> »).</li></ol></li><li>Return <emu-val>undefined</emu-val>.
+      <emu-alg><ol><li>Let <var>F</var> be the <emu-xref href="#active-function-object"><a href="https://tc39.es/ecma262/#active-function-object">active function object</a></emu-xref>.</li><li>Let <var>alreadyCalled</var> be <var>F</var>.[[AlreadyCalled]].</li><li>If <var>alreadyCalled</var>.[[Value]] is <emu-val>true</emu-val>, return <emu-val>undefined</emu-val>.</li><li>Set <var>alreadyCalled</var>.[[Value]] to <emu-val>true</emu-val>.</li><li>Let <var>index</var> be <var>F</var>.[[Index]].</li><li>Let <var>values</var> be <var>F</var>.[[Values]].</li><li>Let <var>promiseCapability</var> be <var>F</var>.[[Capability]].</li><li>Let <var>remainingElementsCount</var> be <var>F</var>.[[RemainingElements]].</li><li>Let <var>obj</var> be !&nbsp;<emu-xref aoid="ObjectCreate" id="_ref_26"><a href="https://tc39.es/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.es/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty" id="_ref_27"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <code>"status"</code>, <code>"rejected"</code>).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty" id="_ref_28"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <code>"reason"</code>, <var>x</var>).</li><li>Set <var>values</var>[<var>index</var>] to be <var>obj</var>.</li><li>Set <var>remainingElementsCount</var>.[[Value]] to <var>remainingElementsCount</var>.[[Value]] - 1.</li><li>If <var>remainingElementsCount</var>.[[Value]] is 0, then<ol><li>Let <var>valuesArray</var> be <emu-xref aoid="CreateArrayFromList" id="_ref_29"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>values</var>).</li><li>Return ?&nbsp;<emu-xref aoid="Call" id="_ref_30"><a href="https://tc39.es/ecma262/#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]], <emu-val>undefined</emu-val>, « <var>valuesArray</var> »).</li></ol></li><li>Return <emu-val>undefined</emu-val>.
       </li></ol></emu-alg>
       <p>The <code>"length"</code> property of a <code>Promise.allSettled</code> reject element function is 1.</p>
     </emu-clause>
   </emu-clause><emu-annex id="sec-copyright-and-software-license">
       <h1><span class="secnum">A</span>Copyright &amp; Software License</h1>
-      
+
       <h2>Copyright Notice</h2>
       <p>© 2019 Jason Williams, Robert Pamely, Mathias Bynens</p>
 

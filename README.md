@@ -153,15 +153,15 @@ Similar functionality exists in other languages with different names. Since ther
 
 ## TC39 meeting notes
 
-- [September 2018](https://tc39.github.io/tc39-notes/2018-09_sept-27.html#promiseallsettled-for-stage-1)
-- [January 2019](https://tc39.github.io/tc39-notes/2019-01_jan-30.html#promiseallsettled)
+- [September 2018](https://tc39.es/tc39-notes/2018-09_sept-27.html#promiseallsettled-for-stage-1)
+- [January 2019](https://tc39.es/tc39-notes/2019-01_jan-30.html#promiseallsettled)
 - [March 2019](https://github.com/rwaldron/tc39-notes/blob/master/meetings/2019-03/mar-26.md#promiseallsettled-for-stage-3)
 - July 2019
 
 ## Specification
 
 * [Ecmarkup source](https://github.com/tc39/proposal-promise-allSettled/blob/master/spec.html)
-* [HTML version](https://tc39.github.io/proposal-promise-allSettled/)
+* [HTML version](https://tc39.es/proposal-promise-allSettled/)
 
 ## Implementations
 
