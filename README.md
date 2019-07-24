@@ -169,4 +169,5 @@ Similar functionality exists in other languages with different names. Since ther
 * [SpiderMonkey](https://bugzilla.mozilla.org/show_bug.cgi?id=1539694), shipping in Firefox 68 Nightly
 * [JavaScriptCore](https://bugs.webkit.org/show_bug.cgi?id=197600), shipping in Safari TP 85 and Safari 13 Beta
 * [Chakra](https://github.com/microsoft/ChakraCore/pull/6138)
+* [XS](https://github.com/Moddable-OpenSource/moddable/issues/211), shipping in v9.0.0
 * [Spec-compliant polyfill](https://www.npmjs.com/package/promise.allsettled)
