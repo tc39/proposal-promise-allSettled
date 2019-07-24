@@ -10,7 +10,7 @@ ECMAScript proposal and reference implementation for `Promise.allSettled`.
 
 ## Overview and motivation
 
-There are four main combinators in the `Promise` landscape.
+There are [four main combinators in the `Promise` landscape](https://v8.dev/features/promise-combinators).
 
 | name                 | description                                     |                                                                     |
 | -------------------- | ----------------------------------------------- | ------------------------------------------------------------------- |
