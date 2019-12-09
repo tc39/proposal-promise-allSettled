@@ -153,10 +153,10 @@ Similar functionality exists in other languages with different names. Since ther
 
 ## TC39 meeting notes
 
-- [September 2018](https://tc39.es/tc39-notes/2018-09_sept-27.html#promiseallsettled-for-stage-1)
-- [January 2019](https://tc39.es/tc39-notes/2019-01_jan-30.html#promiseallsettled)
-- [March 2019](https://github.com/rwaldron/tc39-notes/blob/master/meetings/2019-03/mar-26.md#promiseallsettled-for-stage-3)
-- [July 2019](https://github.com/tc39/tc39-notes/blob/master/meetings/2019-07/july-24.md#promiseallsettled)
+- [September 2018](https://github.com/tc39/notes/blob/master/meetings/2018-09/sept-27.md#promiseallsettled-for-stage-1)
+- [January 2019](https://github.com/tc39/notes/blob/master/meetings/2019-01/jan-30.md#promiseallsettled)
+- [March 2019](https://github.com/tc39/notes/blob/master/meetings/2019-03/mar-26.md#promiseallsettled-for-stage-3)
+- [July 2019](https://github.com/tc39/notes/blob/master/meetings/2019-07/july-24.md#promiseallsettled)
 
 ## Specification
 
